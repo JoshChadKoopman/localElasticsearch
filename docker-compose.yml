@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.1 # Use the desired Elasticsearch version
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false # Disable security for local testing
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g" # Adjust JVM heap size as needed
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200" # Expose Elasticsearch's HTTP port
+      - "9300:9300" # Expose Elasticsearch's transport port
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    networks:
+      - es_network
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.10.1 # Use the desired Kibana version
+    container_name: kibana
+    depends_on:
+      - elasticsearch # Ensure Elasticsearch starts before Kibana
+    environment:
+      - SERVER_NAME=kibana
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200 # Link to the Elasticsearch container
+      - XPACK_SECURITY_ENABLED=false # Disable security for local testing
+    ports:
+      - "5601:5601" # Expose Kibana's HTTP port
+    volumes:
+      - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+    networks:
+      - es_network
+
+volumes:
+  es_data:
+    driver: local
+
+networks:
+  es_network:
+    driver: bridge

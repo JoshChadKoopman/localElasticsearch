@@ -1,0 +1,30 @@
+# Kibana Configuration
+
+# ---------------------------------- Server -----------------------------------
+server.host: "0.0.0.0"                # Kibana will be accessible from any network
+server.port: 5601                     # Kibana's default HTTP port
+server.name: "kibana"                  # Name of the Kibana instance
+
+# --------------------------------- Elasticsearch --------------------------------
+elasticsearch.hosts: ["http://localhost:9200"]  # URL of your Elasticsearch instance
+elasticsearch.username: "elastic"             # Optional: Set a username for basic authentication
+elasticsearch.password: "password"           # Optional: Set a password for basic authentication
+
+# ----------------------------------- Logging ------------------------------------
+logging.verbose: false                    # Set to true for more detailed logging
+
+# ---------------------------------- Security -----------------------------------
+# Kibana security settings (disable for local testing)
+xpack.security.enabled: false             # Disable security for local testing
+# xpack.security.encryptionKey: "your_encryption_key"  # Enable encryption (optional)
+# xpack.security.sessionTimeout: "1h"             # Set session timeout (optional)
+
+# ---------------------------------- Server SSL -----------------------------------
+# Enable SSL for Kibana HTTP (optional)
+# server.ssl.enabled: true
+# server.ssl.key: /path/to/your/ssl.key
+# server.ssl.certificate: /path/to/your/ssl.cert
+
+# ------------------------------- Path Settings -------------------------------
+path.data: /usr/share/kibana/data           # Path for Kibana's data storage
+path.logs: /usr/share/kibana/logs           # Path for Kibana's logs

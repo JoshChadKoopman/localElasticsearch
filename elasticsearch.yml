@@ -1,0 +1,25 @@
+# Elasticsearch Configuration
+
+# ---------------------------------- Cluster -----------------------------------
+cluster.name: single-node-cluster # Name of the Elasticsearch cluster
+node.name: single-node            # Name of this node
+
+# ---------------------------------- Network -----------------------------------
+network.host: 0.0.0.0             # Listen on all network interfaces
+http.port: 9200                   # HTTP port for Elasticsearch
+
+# ----------------------------------- Node -------------------------------------
+node.roles: [master, data, ingest] # Single-node setup requires all roles
+
+# ----------------------------- Discovery and Cluster --------------------------
+discovery.type: single-node       # Single-node mode (no discovery required)
+
+# ----------------------------------- Paths ------------------------------------
+path.data: /usr/share/elasticsearch/data   # Path to store data
+path.logs: /usr/share/elasticsearch/logs   # Path to store logs
+
+# ------------------------------ Memory Settings -------------------------------
+bootstrap.memory_lock: true       # Lock memory to prevent swapping
+
+# ---------------------------------- Security ----------------------------------
+xpack.security.enabled: false     # Disable security for local testing
